@@ -1,0 +1,420 @@
+---
+// Scroll-driven country showcase. The whole section is one 700vh pinned block.
+// As the user scrolls, seven "slides" play in sequence (six countries + an
+// outro). Each slide crossfades the left-side copy and the right-side glowing
+// SVG region; the region's name sits on top of its shape.
+//
+// Slide index is derived purely from scroll percentage through the pinned span
+// (7 slides => each owns ~1/7 of the travel), so motion is fully scrubbable.
+import { showcaseShapes } from '../data/showcaseShapes.js';
+
+const shapeKeys = Object.keys(showcaseShapes);
+
+const slides = [
+  {
+    name: 'Texas, USA',
+    heading: 'WE BROUGHT STEM TO <span class="hl">12,500+</span> STUDENTS',
+    copy: 'From FMHS to elementary schools across DFW, we hosted FIRST Awareness Events, community robot demos, and summer camps that introduced thousands of students to engineering for the first time.',
+    stats: ['4 teams started', '11 schools visited', '10,000+ at Diwali event'],
+    href: '/work/diwali_fundraising',
+    shape: 'texas',
+  },
+  {
+    name: 'India',
+    heading: '<span class="hl">5,000+</span> STUDENTS. NINE 3D PRINTERS.',
+    copy: 'We partnered with Village Technology Schools to bring FIRST robotics to rural Tamil Nadu — introducing the program to students who had never seen a robot, and leaving behind 5 makerspaces and 5 active FTC teams.',
+    stats: ['5 FTC teams', '9 printers', '2 teams fully funded'],
+    href: '/work/help_in_india',
+    shape: 'india',
+  },
+  {
+    name: 'Jamaica',
+    heading: 'FOUR PRINTERS. <span class="hl">FIFTY TEAMS.</span>',
+    copy: "Jamaican FTC teams were competing without the hardware to build custom parts. We coordinated with Jamaica's FIRST Program Development Partner to ship 4 3D printers and 16 filaments — giving 50+ teams access to rapid prototyping for the first time.",
+    stats: ['4 printers', '16 filaments', '50+ teams'],
+    href: '/work/makerspaces_in_jamaica',
+    shape: 'jamaica',
+  },
+  {
+    name: 'United Arab Emirates',
+    heading: '<span class="hl">17 FTC TEAMS</span> AND A FIRST REGION',
+    copy: 'Working with Unique World Robotics and PDP Mr. Mohammed, we helped establish the UAE FIRST Region from scratch — starting 17 teams, hosting a UAE FIRST Awareness Event, and meeting with the UAE Ambassador in Washington D.C.',
+    stats: ['17 teams', 'UAE FIRST Region', 'Gold · FIRST Global 2025'],
+    href: '/#work',
+    shape: 'uae',
+  },
+  {
+    name: 'Uganda',
+    heading: 'ONE HAND. <span class="hl">ONE LIFE CHANGED.</span>',
+    copy: 'We partnered with e-NABLE the Future to 3D print and ship a prosthetic hand to Uganda — applying our engineering skills beyond robotics to solve a real human need.',
+    stats: ['1 prosthetic hand delivered', 'e-NABLE partnership'],
+    href: '/#work',
+    shape: 'uganda',
+  },
+  {
+    name: 'South Africa',
+    heading: 'SPREADING FIRST <span class="hl">ACROSS CONTINENTS</span>',
+    copy: 'Partnering with FTC 11468 Ohm Raiders and 13 other teams, we collected and shipped FLL LEGO PRIME starter kits to South African classrooms — giving dozens of kids their first shot at competitive robotics.',
+    stats: ['3 FLL kits shipped', '14-team collaboration'],
+    href: '/#work',
+    shape: 'southAfrica',
+  },
+  {
+    name: null,
+    heading: '<span class="hl">FIVE NATIONS.</span> ONE STATE.',
+    copy: 'From a high school in Flower Mound, Texas, to classrooms in Tamil Nadu, Kingston, Abu Dhabi, Kampala, and Cape Town — Tech To Empower goes where STEM hasn’t reached yet.',
+    stats: null,
+    href: null,
+    shape: null,
+  },
+];
+---
+
+<section class="showcase" id="showcase" aria-label="Tech To Empower around the world">
+  <div class="showcase__pin">
+    <div class="showcase__grid">
+      <!-- LEFT: stacked, crossfading copy -->
+      <div class="showcase__copy">
+        {slides.map((s, i) => (
+          <article class="slide" data-slide={i}>
+            <span class="slide__rule" aria-hidden="true"></span>
+            <h2 class="slide__heading" set:html={s.heading}></h2>
+            <p class="slide__body">{s.copy}</p>
+            {s.stats && (
+              <ul class="slide__stats">
+                {s.stats.map((stat) => <li>{stat}</li>)}
+              </ul>
+            )}
+            {s.href && (
+              <a class="slide__link" href={s.href}>
+                See initiative <span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+
+      <!-- RIGHT: stacked, crossfading glowing regions, name on top -->
+      <div class="showcase__stage">
+        {slides.map((s, i) => (
+          <div class="stage__layer" data-shape={i}>
+            {s.shape ? (
+              <>
+                <span class="stage__name">{s.name}</span>
+                <svg
+                  class="shape"
+                  viewBox={showcaseShapes[s.shape].viewBox}
+                  preserveAspectRatio="xMidYMid meet"
+                  role="presentation"
+                  aria-hidden="true"
+                  set:html={showcaseShapes[s.shape].inner}
+                />
+              </>
+            ) : (
+              <div class="stage__cluster">
+                {shapeKeys.map((k) => (
+                  <svg
+                    class="shape shape--mini"
+                    viewBox={showcaseShapes[k].viewBox}
+                    preserveAspectRatio="xMidYMid meet"
+                    role="presentation"
+                    aria-hidden="true"
+                    set:html={showcaseShapes[k].inner}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    position: relative;
+    height: 700vh;
+    background: var(--navy);
+    --shape-fill: #0d1f3c;
+  }
+
+  .showcase__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--navy);
+  }
+
+  .showcase__grid {
+    height: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 5rem);
+  }
+
+  /* ---- left copy: stacked layers, only the active one shows ---- */
+  .showcase__copy {
+    position: relative;
+    min-height: 60vh;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 34rem;
+    opacity: 0;
+    transform: translateY(22px);
+    pointer-events: none;
+    transition: opacity 0.5s var(--ease-out-expo),
+      transform 0.6s var(--ease-out-expo);
+  }
+
+  .slide.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .slide__rule {
+    width: 56px;
+    height: 2px;
+    background: var(--sky);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+  }
+
+  .slide__heading {
+    font-family: var(--font-condensed);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 1.6rem + 3.6vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .slide__heading :global(.hl) {
+    color: var(--sky);
+  }
+
+  .slide__body {
+    margin-top: 1.4rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .slide__stats {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem 2.4rem;
+  }
+
+  .slide__stats li {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.15rem, 0.9rem + 0.8vw, 1.6rem);
+    line-height: 1.1;
+    color: var(--white);
+    max-width: 9rem;
+  }
+
+  .slide__link {
+    align-self: flex-start;
+    margin-top: 2rem;
+    display: inline-flex;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--sky);
+    transition: gap var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .slide__link:hover {
+    gap: 0.85rem;
+  }
+
+  /* ---- right stage: stacked glowing regions ---- */
+  .showcase__stage {
+    position: relative;
+    height: min(76vh, 640px);
+  }
+
+  .stage__layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.75rem, 2vh, 1.75rem);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out-expo);
+  }
+
+  .stage__layer.is-active {
+    opacity: 1;
+  }
+
+  /* region name sitting on top of the shape */
+  .stage__name {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.8rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-align: center;
+    text-shadow: 0 2px 24px rgba(10, 22, 40, 0.8);
+  }
+
+  .shape {
+    width: min(100%, 440px);
+    height: min(52vh, 440px);
+    overflow: visible;
+    filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.28));
+    transition: filter 0.5s var(--ease-out-expo);
+  }
+
+  .shape :global(path) {
+    fill: var(--shape-fill);
+    stroke: var(--sky);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  /* active region glows brighter + breathes */
+  .stage__layer.is-active .shape {
+    filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.55));
+    animation: shapePulse 3.6s var(--ease-in-out) infinite;
+  }
+
+  @keyframes shapePulse {
+    0%,
+    100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.42));
+    }
+    50% {
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 32px rgba(56, 189, 248, 0.72));
+    }
+  }
+
+  /* outro: all regions faint in a grid */
+  .stage__cluster {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.5rem, 2vw, 1.8rem);
+    width: min(100%, 480px);
+    place-items: center;
+  }
+
+  .shape--mini {
+    width: 100%;
+    height: clamp(70px, 12vh, 120px);
+    opacity: 0.32;
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.28));
+    animation: none;
+  }
+
+  .shape--mini :global(path) {
+    stroke-width: 1.6;
+  }
+
+  /* ---- responsive: stack copy over a smaller region ---- */
+  @media (max-width: 860px) {
+    .showcase__grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      align-content: center;
+    }
+
+    .showcase__stage {
+      order: -1;
+      height: min(40vh, 340px);
+    }
+
+    .showcase__copy {
+      min-height: 44vh;
+    }
+
+    .shape {
+      width: min(80%, 320px);
+      height: min(30vh, 300px);
+    }
+
+    .slide {
+      max-width: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage__layer.is-active .shape {
+      animation: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const section = document.getElementById('showcase');
+    if (!section) return;
+
+    const slides = Array.from(section.querySelectorAll('.slide'));
+    const layers = Array.from(section.querySelectorAll('.stage__layer'));
+    const count = slides.length;
+    if (!count) return;
+
+    let active = -1;
+
+    function setActive(i) {
+      if (i === active) return;
+      active = i;
+      for (let n = 0; n < count; n++) {
+        const on = n === i;
+        slides[n].classList.toggle('is-active', on);
+        if (layers[n]) layers[n].classList.toggle('is-active', on);
+      }
+    }
+
+    // scroll progress 0..1 across the pinned span -> slide index
+    let ticking = false;
+    function update() {
+      ticking = false;
+      const total = section.offsetHeight - window.innerHeight;
+      const p = total > 0 ? -section.getBoundingClientRect().top / total : 0;
+      const clamped = Math.min(1, Math.max(0, p));
+      const i = Math.min(count - 1, Math.floor(clamped * count));
+      setActive(i);
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+</script>

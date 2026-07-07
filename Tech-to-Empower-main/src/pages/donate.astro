@@ -1,0 +1,260 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const tiers = [
+  { amount: '$10', note: 'Buys parts for one student' },
+  { amount: '$25', note: 'Funds a week of FIRST training' },
+  { amount: '$50', note: 'Ships a 3D printer component' },
+  { amount: '$100', note: 'Sponsors a team for one month' },
+];
+---
+
+<Layout
+  title="Donate — Tech To Empower"
+  description="Fund real STEM programs. Every dollar goes directly to students. 501(c)(3) — fully tax-deductible."
+>
+  <section class="donate section">
+    <div class="container donate__grid">
+      <div class="donate__intro" data-reveal-group>
+        <span class="eyebrow eyebrow--muted reveal">Support the mission</span>
+        <h1 class="donate__title reveal">Fund real programs</h1>
+        <p class="donate__lede reveal">
+          Every dollar goes directly to students. 3D printer filament, robot parts, travel
+          for a team that couldn&rsquo;t otherwise afford to compete. 501(c)(3) — fully
+          tax-deductible.
+        </p>
+        <p class="donate__proof reveal">
+          <span class="donate__proof-dot" aria-hidden="true"></span>
+          Join 200+ supporters funding STEM worldwide
+        </p>
+      </div>
+
+      <div class="donate__card-wrap reveal">
+        <div class="donate__beam"></div>
+        <div class="donate__card">
+          <h2 class="donate__card-title">Choose an amount</h2>
+
+          <div class="tiers" role="radiogroup" aria-label="Donation amount">
+            {
+              tiers.map((tier, i) => (
+                <button
+                  class:list={['tier-card', { 'is-selected': i === 1 }]}
+                  type="button"
+                  role="radio"
+                  aria-checked={i === 1 ? 'true' : 'false'}
+                  data-amount={tier.amount}
+                >
+                  <span class="tier-card__amount">{tier.amount}</span>
+                  <span class="tier-card__note">{tier.note}</span>
+                </button>
+              ))
+            }
+          </div>
+
+          {/* TODO: replace href="#" with the live Square donation link when available. */}
+          <a class="btn donate__submit" id="donate-submit" href="#" data-base="Donate">
+            <span class="btn__icon" aria-hidden="true">→</span>
+            <span id="donate-submit-label">Donate $25 via Square</span>
+          </a>
+
+          <p class="donate__fineprint">
+            Secure checkout via Square &middot; Tech To Empower is a registered 501(c)(3)
+            nonprofit &middot; donations are tax-deductible.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .donate {
+    padding-top: calc(76px + var(--space-section));
+  }
+
+  .donate__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 1rem + 5vw, 6rem);
+  }
+
+  .donate__title {
+    font-size: var(--text-hero);
+    font-weight: 900;
+    margin-top: 1.2rem;
+    line-height: 0.98;
+  }
+
+  .donate__lede {
+    margin-top: 1.6rem;
+    max-width: 44ch;
+    font-size: var(--text-lg);
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .donate__proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--navy-mid);
+  }
+
+  .donate__proof-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sky);
+    box-shadow: 0 0 0 4px var(--sky-soft);
+  }
+
+  /* ---- animated conic beam border (navy → sky, no orange) ---- */
+  .donate__card-wrap {
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    isolation: isolate;
+  }
+
+  .donate__beam {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .donate__beam::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(
+      from 0deg,
+      var(--navy),
+      var(--navy-mid),
+      var(--sky),
+      var(--navy-mid),
+      var(--navy)
+    );
+    animation: beamSpin 6s linear infinite;
+  }
+
+  @keyframes beamSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .donate__card {
+    position: relative;
+    background: var(--white);
+    border-radius: calc(var(--radius-lg) - 2px);
+    padding: clamp(1.8rem, 1.2rem + 2vw, 2.6rem);
+  }
+
+  .donate__card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+  }
+
+  .tiers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+
+  .tier-card {
+    text-align: left;
+    padding: 1.2rem 1.3rem;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease,
+      transform var(--duration-fast) var(--ease-out-expo);
+  }
+
+  .tier-card:hover {
+    border-color: var(--sky);
+    transform: translateY(-2px);
+  }
+
+  .tier-card.is-selected {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .tier-card__amount {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .tier-card.is-selected .tier-card__amount {
+    color: var(--white);
+  }
+
+  .tier-card__note {
+    font-size: var(--text-sm);
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .tier-card.is-selected .tier-card__note {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .donate__submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1.5rem;
+    font-size: var(--text-base);
+  }
+
+  .donate__fineprint {
+    margin-top: 1.2rem;
+    font-size: var(--text-xs);
+    color: var(--muted);
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  @media (max-width: 880px) {
+    .donate__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .tiers {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.tier-card');
+  const label = document.getElementById('donate-submit-label');
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      cards.forEach((c) => {
+        c.classList.remove('is-selected');
+        c.setAttribute('aria-checked', 'false');
+      });
+      card.classList.add('is-selected');
+      card.setAttribute('aria-checked', 'true');
+      const amount = card.dataset.amount ?? '';
+      if (label) label.textContent = `Donate ${amount} via Square`;
+    });
+  });
+</script>

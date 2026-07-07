@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Officers from '../components/Officers.astro';
+
+const values = [
+  {
+    title: 'Show up in person',
+    body: 'We mentor weekly, ship hardware ourselves, and travel to the teams we support. Presence is the work.',
+  },
+  {
+    title: 'Hardware over hand-waving',
+    body: 'Printers, parts, registration fees, and travel. We fund the specific things that stand between a student and a robot.',
+  },
+  {
+    title: 'Reach who others skip',
+    body: 'Rural schools, neurodiverse students, under-resourced teams. We go where STEM hasn’t reached yet.',
+  },
+];
+---
+
+<Layout
+  title="Team — Tech To Empower"
+  description="The officers and volunteers behind Tech To Empower, a 501(c)(3) nonprofit bringing FIRST robotics and STEM to underserved communities."
+>
+  <section class="team-hero section">
+    <div class="container team-hero__inner" data-reveal-group>
+      <span class="eyebrow eyebrow--muted reveal">The Team</span>
+      <h1 class="team-hero__title reveal">Students running real programs.</h1>
+      <p class="team-hero__lede reveal">
+        Tech To Empower is led by students who build, mentor, and ship — not from a
+        distance, but inside the classrooms, competitions, and communities we serve. We
+        keep the organization small and the impact specific.
+      </p>
+    </div>
+  </section>
+
+  <Officers />
+
+  <section class="team-values section">
+    <div class="container">
+      <header class="team-values__head" data-reveal-group>
+        <span class="eyebrow reveal">How We Work</span>
+        <h2 class="team-values__title reveal">Three things we don&rsquo;t compromise on.</h2>
+      </header>
+      <div class="team-values__grid" data-reveal-group>
+        {
+          values.map((value) => (
+            <article class="value-card reveal">
+              <h3 class="value-card__title">{value.title}</h3>
+              <p class="value-card__body">{value.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="team-cta">
+    <div class="container team-cta__inner" data-reveal-group>
+      <h2 class="team-cta__title reveal">Want to support the work?</h2>
+      <a class="btn btn--sky reveal" href="/donate">
+        <span class="btn__icon" aria-hidden="true">&rarr;</span>
+        Fund a program
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .team-hero {
+    padding-top: calc(76px + var(--space-section));
+    background: var(--white);
+  }
+  .team-hero__inner {
+    max-width: 800px;
+  }
+  .team-hero__title {
+    font-size: var(--text-hero);
+    font-weight: 900;
+    margin-top: 1.2rem;
+    line-height: 0.98;
+  }
+  .team-hero__lede {
+    margin-top: 1.6rem;
+    font-size: var(--text-lg);
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 56ch;
+  }
+
+  .team-values__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  }
+  .team-values__title {
+    font-size: var(--text-2xl);
+    max-width: 18ch;
+  }
+  .team-values__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.2rem, 0.6rem + 2vw, 2rem);
+  }
+  .value-card {
+    padding: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      border-color var(--duration-normal) ease;
+  }
+  .value-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--sky);
+  }
+  .value-card__title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .value-card__body {
+    margin-top: 0.9rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .team-cta {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .team-cta__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .team-cta__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--white);
+  }
+
+  @media (max-width: 760px) {
+    .team-values__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

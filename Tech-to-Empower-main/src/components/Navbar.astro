@@ -1,0 +1,284 @@
+---
+interface Props {
+  transparent?: boolean;
+}
+const { transparent = false } = Astro.props;
+---
+
+<header class:list={['nav', { 'nav--transparent': transparent }]} id="site-nav">
+  <div class="nav__inner container">
+    <a class="nav__brand" href="/" aria-label="Tech To Empower — home">
+      <span class="nav__mark"><img src="/assets/images/tte-logo.png" alt="" width="38" height="38" /></span>
+      <span class="nav__wordmark">Tech To Empower</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Main navigation">
+      <a href="/#work">Our Work</a>
+      <a href="/team">Team</a>
+      <a href="/mission">Mission</a>
+      <a class="btn nav__cta" href="/donate">Donate Now</a>
+    </nav>
+
+    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+
+  <div class="nav__drawer" id="nav-drawer">
+    <a href="/#work">Our Work</a>
+    <a href="/team">Team</a>
+    <a href="/mission">Mission</a>
+    <a class="btn nav__cta" href="/donate">Donate Now</a>
+  </div>
+</header>
+
+<!-- Persistent donate CTA: surfaces top-right whenever the auto-hiding nav
+     is tucked away, so it stays reachable through the whole scroll journey. -->
+<a class="donate-pill" href="/donate">Donate Now</a>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 150;
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      background var(--duration-normal) ease, border-color var(--duration-normal) ease;
+  }
+
+  /* Solid black bar on every page, including over the hero. */
+  .nav--transparent {
+    background: #0a0a0a;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav.is-scrolled {
+    background: #0a0a0a;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav.is-hidden {
+    transform: translateY(-100%);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+  }
+
+  /* Light-blue block bleeding to the left viewport edge, full nav height,
+     holding the logo + wordmark — Ocean Cleanup style. */
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    align-self: stretch;
+    /* Bleed the blue block to the extreme left viewport edge in every regime:
+       below --max-width the term is 0 (just the gutter); above it, also pull
+       across the centered container's left margin. */
+    margin-left: calc(-1 * (max((100vw - var(--max-width)) / 2, 0px) + var(--gutter)));
+    padding-left: 1.5rem;
+    padding-right: 1.6rem;
+    background: var(--sky);
+  }
+
+  .nav__mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .nav__mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .nav__wordmark {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    transition: color var(--duration-normal) ease;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    /* Mirror the brand's left bleed: pull the links out to the extreme right
+       viewport edge so they sit flush top-right instead of stopping at the
+       container gutter. */
+    margin-right: calc(-1 * (max((100vw - var(--max-width)) / 2, 0px) + var(--gutter)));
+    padding-right: 1.6rem;
+  }
+
+  .nav__links > a:not(.nav__cta) {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--white);
+    position: relative;
+    transition: color var(--duration-normal) ease;
+  }
+
+  .nav__links > a:not(.nav__cta)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 1.5px;
+    background: var(--sky);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .nav__links > a:not(.nav__cta):hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav__cta {
+    padding: 0.6rem 1.3rem;
+    --btn-bg: var(--sky);
+    --btn-fg: var(--navy);
+  }
+
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav__toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    transition: transform var(--duration-fast) ease, opacity var(--duration-fast) ease;
+  }
+
+  .nav__drawer {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 var(--gutter) 1.5rem;
+    background: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav__drawer.is-open {
+    display: flex;
+  }
+
+  .nav__drawer > a {
+    padding: 0.75rem 0;
+    font-weight: 500;
+    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav__drawer > a.nav__cta {
+    border: none;
+    margin-top: 0.5rem;
+    justify-content: center;
+  }
+
+  @media (max-width: 860px) {
+    .nav__links {
+      display: none;
+    }
+    .nav__toggle {
+      display: flex;
+    }
+  }
+
+  /* ---- persistent donate pill ---- */
+  .donate-pill {
+    position: fixed;
+    top: 18px;
+    right: var(--gutter);
+    z-index: 160;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.62rem 1.4rem;
+    border-radius: 999px;
+    background: var(--sky);
+    color: var(--navy);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    box-shadow: 0 10px 30px -12px rgba(56, 189, 248, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity var(--duration-normal) var(--ease-out-expo),
+      transform var(--duration-normal) var(--ease-out-expo),
+      visibility var(--duration-normal);
+  }
+
+  /* Reveal only while the main nav is hidden (scrolling down the journey). */
+  #site-nav.is-hidden ~ .donate-pill {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .donate-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px -12px rgba(56, 189, 248, 0.95);
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const toggle = document.getElementById('nav-toggle');
+  const drawer = document.getElementById('nav-drawer');
+
+  if (nav) {
+    let lastY = window.scrollY;
+    const update = () => {
+      const y = window.scrollY;
+      // frosted background after 40px
+      nav.classList.toggle('is-scrolled', y > 40);
+      // hide on scroll-down past 100px, show on scroll-up
+      if (y > 100 && y > lastY) {
+        nav.classList.add('is-hidden');
+      } else {
+        nav.classList.remove('is-hidden');
+      }
+      lastY = y;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  if (toggle && drawer) {
+    toggle.addEventListener('click', () => {
+      const open = drawer.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    drawer.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        drawer.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
+  }
+</script>

@@ -1,0 +1,468 @@
+---
+import Layout from './Layout.astro';
+
+interface Stat {
+  value: string;
+  label: string;
+}
+interface InitiativeData {
+  pageTitle: string;
+  region: string;
+  heroImage: string;
+  opening: string;
+  problem: string;
+  did: string[];
+  stats: Stat[];
+  gallery: string[];
+  galleryNote?: string;
+  next: string;
+}
+
+interface Props {
+  data: InitiativeData;
+}
+const { data } = Astro.props;
+---
+
+<Layout
+  title={`${data.pageTitle} — Tech To Empower`}
+  description={data.opening}
+  transparentNav={true}
+>
+  <article class="init">
+    <!-- 1. Full-bleed parallax hero -->
+    <header class="init-hero">
+      <div class="init-hero__media" data-parallax>
+        <img src={data.heroImage} alt="" width="1920" height="1080" />
+      </div>
+      <div class="init-hero__shade" aria-hidden="true"></div>
+      <div class="container init-hero__content">
+        <span class="init-hero__region">{data.region}</span>
+        <h1 class="init-hero__title">{data.pageTitle}</h1>
+      </div>
+    </header>
+
+    <!-- 2. Opening statement -->
+    <section class="container init-opening section" data-reveal-group>
+      <p class="init-opening__text reveal">{data.opening}</p>
+    </section>
+
+    <!-- 3. The problem -->
+    <section class="init-problem">
+      <div class="container init-problem__inner" data-reveal-group>
+        <span class="eyebrow reveal">The Problem</span>
+        <p class="init-problem__text reveal">{data.problem}</p>
+      </div>
+    </section>
+
+    <!-- 4. What TTE did -->
+    <section class="container init-did section" data-reveal-group>
+      <span class="eyebrow eyebrow--muted reveal">What We Did</span>
+      <ol class="init-did__list">
+        {
+          data.did.map((item, i) => (
+            <li class="init-did__item reveal">
+              <span class="init-did__num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="init-did__text">{item}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- 5. Stats row -->
+    <section class="init-stats">
+      <div class="container init-stats__grid" data-reveal-group>
+        {
+          data.stats.map((stat) => (
+            <div class="init-stat reveal">
+              <span class="init-stat__value">{stat.value}</span>
+              <span class="init-stat__label">{stat.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 6. Photo gallery (masonry + 3D tilt + lightbox) -->
+    {
+      data.gallery.length > 0 ? (
+        <section class="container init-gallery section" data-reveal-group>
+          <span class="eyebrow eyebrow--muted reveal">From the Field</span>
+          <div class="init-gallery__masonry" id="gallery">
+            {data.gallery.map((src, i) => (
+              <button class="gallery-item reveal" data-tilt data-index={i} type="button">
+                <img src={src} alt={`${data.pageTitle} — photo ${i + 1}`} loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section class="container init-gallery section" data-reveal-group>
+          <span class="eyebrow eyebrow--muted reveal">From the Field</span>
+          <p class="init-gallery__note reveal">{data.galleryNote ?? 'Photos coming soon.'}</p>
+        </section>
+      )
+    }
+
+    <!-- 8. What's next -->
+    <section class="container init-next section" data-reveal-group>
+      <span class="eyebrow eyebrow--muted reveal">What&rsquo;s Next</span>
+      <p class="init-next__text reveal">{data.next}</p>
+    </section>
+
+    <!-- 9. CTA -->
+    <section class="init-cta">
+      <div class="container init-cta__inner" data-reveal-group>
+        <a class="btn btn--ghost reveal" href="/#work">
+          <span class="btn__icon" aria-hidden="true">&larr;</span>
+          Back to home
+        </a>
+        <a class="btn btn--sky reveal" href="/donate">
+          <span class="btn__icon" aria-hidden="true">&rarr;</span>
+          Fund this work
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Image viewer" hidden>
+    <button class="lightbox__close" id="lb-close" aria-label="Close">&times;</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lb-prev" aria-label="Previous">&lsaquo;</button>
+    <img class="lightbox__img" id="lb-img" src="" alt="" />
+    <button class="lightbox__nav lightbox__nav--next" id="lb-next" aria-label="Next">&rsaquo;</button>
+  </div>
+</Layout>
+
+<style>
+  /* 1. Hero */
+  .init-hero {
+    position: relative;
+    height: 86vh;
+    min-height: 520px;
+    overflow: hidden;
+    background: var(--navy);
+  }
+  .init-hero__media {
+    position: absolute;
+    inset: -12% 0;
+    will-change: transform;
+  }
+  .init-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .init-hero__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, transparent 60%);
+  }
+  .init-hero__content {
+    position: absolute;
+    inset: auto 0 clamp(3rem, 2rem + 4vw, 6rem) 0;
+    color: var(--white);
+  }
+  .init-hero__region {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+  .init-hero__title {
+    margin-top: 0.8rem;
+    font-size: var(--text-hero);
+    font-weight: 900;
+    line-height: 0.98;
+    max-width: 16ch;
+  }
+
+  /* 2. Opening */
+  .init-opening__text {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-2xl);
+    line-height: 1.12;
+    max-width: 22ch;
+    letter-spacing: -0.015em;
+  }
+
+  /* 3. Problem */
+  .init-problem {
+    background: var(--surface);
+  }
+  .init-problem__inner {
+    padding-block: var(--space-section);
+    display: grid;
+    gap: 1.4rem;
+    max-width: 760px;
+  }
+  .init-problem__text {
+    font-size: var(--text-xl);
+    line-height: 1.4;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* 4. What we did */
+  .init-did__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 0.4rem;
+    counter-reset: did;
+  }
+  .init-did__item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--border);
+    font-size: var(--text-lg);
+    line-height: 1.5;
+  }
+  .init-did__item:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+  .init-did__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--sky);
+  }
+
+  /* 5. Stats */
+  .init-stats {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .init-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+  .init-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .init-stat__value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 1.4rem + 3vw, 3.6rem);
+    line-height: 1;
+    color: var(--sky);
+  }
+  .init-stat__label {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  /* 6. Gallery */
+  .init-gallery__masonry {
+    margin-top: 2rem;
+    column-count: 3;
+    column-gap: clamp(0.8rem, 0.4rem + 1vw, 1.4rem);
+  }
+  .gallery-item {
+    display: block;
+    width: 100%;
+    margin: 0 0 clamp(0.8rem, 0.4rem + 1vw, 1.4rem);
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+    break-inside: avoid;
+    transform-style: preserve-3d;
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      box-shadow var(--duration-normal) ease;
+    will-change: transform;
+  }
+  .gallery-item:hover {
+    box-shadow: var(--shadow-card);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .init-gallery__note {
+    margin-top: 1.5rem;
+    font-size: var(--text-lg);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* 8. Next */
+  .init-next__text {
+    margin-top: 1.4rem;
+    max-width: 56ch;
+    font-size: var(--text-xl);
+    line-height: 1.45;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* 9. CTA */
+  .init-cta {
+    border-top: 1px solid var(--border);
+  }
+  .init-cta__inner {
+    padding-block: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: rgba(7, 16, 30, 0.92);
+    backdrop-filter: blur(8px);
+    padding: clamp(1rem, 3vw, 3rem);
+  }
+  .lightbox[hidden] {
+    display: none;
+  }
+  .lightbox__img {
+    max-width: min(1100px, 92vw);
+    max-height: 86vh;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-float);
+  }
+  .lightbox__close,
+  .lightbox__nav {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: var(--white);
+    cursor: pointer;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transition: background var(--duration-fast) ease;
+  }
+  .lightbox__close:hover,
+  .lightbox__nav:hover {
+    background: var(--sky);
+    color: var(--navy);
+  }
+  .lightbox__close {
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .lightbox__nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px;
+    height: 54px;
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .lightbox__nav--prev {
+    left: clamp(1rem, 3vw, 2.5rem);
+  }
+  .lightbox__nav--next {
+    right: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  @media (max-width: 820px) {
+    .init-stats__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+    }
+    .init-gallery__masonry {
+      column-count: 2;
+    }
+  }
+  @media (max-width: 520px) {
+    .init-did__item {
+      grid-template-columns: 2.4rem 1fr;
+      font-size: var(--text-base);
+    }
+    .init-gallery__masonry {
+      column-count: 1;
+    }
+  }
+</style>
+
+<script>
+  // ---- Parallax hero ----
+  const parallax = document.querySelector<HTMLElement>('[data-parallax]');
+  if (parallax && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const onScroll = () => {
+      const offset = window.scrollY * 0.18;
+      parallax.style.transform = `translate3d(0, ${offset}px, 0)`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // ---- Gallery 3D tilt ----
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.gallery-item'));
+  if (fine) {
+    items.forEach((item) => {
+      item.style.perspective = '800px';
+      item.addEventListener('mousemove', (e) => {
+        const r = item.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        item.style.transform = `rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateY(-4px)`;
+      });
+      item.addEventListener('mouseleave', () => {
+        item.style.transform = '';
+      });
+    });
+  }
+
+  // ---- Lightbox ----
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
+  const sources = items.map((it) => it.querySelector('img')?.getAttribute('src') ?? '');
+  let lbIndex = 0;
+
+  const openLb = (i: number) => {
+    if (!lb || !lbImg) return;
+    lbIndex = (i + sources.length) % sources.length;
+    lbImg.src = sources[lbIndex];
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+  };
+  const closeLb = () => {
+    if (!lb) return;
+    lb.hidden = true;
+    document.body.style.overflow = '';
+  };
+
+  items.forEach((item, i) => item.addEventListener('click', () => openLb(i)));
+  document.getElementById('lb-close')?.addEventListener('click', closeLb);
+  document.getElementById('lb-prev')?.addEventListener('click', () => openLb(lbIndex - 1));
+  document.getElementById('lb-next')?.addEventListener('click', () => openLb(lbIndex + 1));
+  lb?.addEventListener('click', (e) => {
+    if (e.target === lb) closeLb();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (lb?.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') openLb(lbIndex - 1);
+    if (e.key === 'ArrowRight') openLb(lbIndex + 1);
+  });
+</script>

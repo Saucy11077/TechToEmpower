@@ -1,0 +1,177 @@
+---
+const ways = [
+  {
+    label: 'Fund a program',
+    desc: 'Printers, parts, registration fees, travel — your gift buys the specific things between a student and a robot.',
+    href: '/donate',
+  },
+  {
+    label: 'Bring us to your community',
+    desc: 'Schools, teams, and organizers: tell us where STEM hasn’t reached yet and we’ll show up.',
+    href: 'https://instagram.com/tech_to_empower',
+    external: true,
+  },
+];
+---
+
+<section class="involve section">
+  <div class="container">
+    <div class="involve__card" data-reveal-group>
+      <div class="involve__glow" aria-hidden="true"></div>
+
+      <div class="involve__intro">
+        <span class="eyebrow reveal">Get Involved</span>
+        <h2 class="involve__title reveal">Help build the next generation of engineers.</h2>
+        <p class="involve__lede reveal">
+          Tech To Empower runs on people who show up. Whether you fund a program or open a
+          door in your community, you put real hardware in real students&rsquo; hands.
+        </p>
+      </div>
+
+      <div class="involve__ways" data-reveal-group>
+        {
+          ways.map((way) => (
+            <a
+              class="way reveal"
+              href={way.href}
+              data-cursor
+              {...(way.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              <span class="way__text">
+                <span class="way__label">{way.label}</span>
+                <span class="way__desc">{way.desc}</span>
+              </span>
+              <span class="way__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .involve {
+    background: var(--surface);
+  }
+
+  .involve__card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, #0c1d38 0%, var(--navy) 60%, #060f1e 100%);
+    color: var(--white);
+    padding: clamp(2.4rem, 1.6rem + 4vw, 5rem);
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+    align-items: center;
+    box-shadow: var(--shadow-card);
+  }
+
+  .involve__glow {
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 60%;
+    height: 160%;
+    background: radial-gradient(circle, var(--sky-soft) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .involve__intro {
+    position: relative;
+    z-index: 1;
+  }
+
+  .involve__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    line-height: 1.08;
+    margin-top: 1.2rem;
+    color: var(--white);
+    max-width: 16ch;
+  }
+
+  .involve__lede {
+    margin-top: 1.4rem;
+    font-size: var(--text-base);
+    color: rgba(255, 255, 255, 0.74);
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  .involve__ways {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .way {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding: clamp(1.2rem, 0.9rem + 1vw, 1.6rem);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      background var(--duration-normal) ease, border-color var(--duration-normal) ease;
+  }
+
+  .way:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.09);
+    border-color: var(--sky);
+  }
+
+  .way__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .way__label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--white);
+  }
+
+  .way__desc {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.45;
+    max-width: 40ch;
+  }
+
+  .way__arrow {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 1.15rem;
+    color: var(--sky);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      background var(--duration-normal) ease, color var(--duration-normal) ease;
+  }
+
+  .way:hover .way__arrow {
+    background: var(--sky);
+    color: var(--navy);
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 860px) {
+    .involve__card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

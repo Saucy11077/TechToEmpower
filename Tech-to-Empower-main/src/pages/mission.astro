@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pillars = [
+  {
+    num: '01',
+    title: 'Access, not awareness',
+    body: 'It isn’t enough to tell a student that robotics exists. We put the hardware, the mentorship, and the registration fees in front of them so they can actually compete.',
+  },
+  {
+    num: '02',
+    title: 'Build local capacity',
+    body: 'Every makerspace we fund and every team we start is meant to outlast us. We partner with local organizations so the programs keep running after the printers arrive.',
+  },
+  {
+    num: '03',
+    title: 'Design for who gets left out',
+    body: 'Rural classrooms, neurodiverse students, girls in STEM, under-resourced teams. We aim our work at the people most programs quietly skip.',
+  },
+];
+---
+
+<Layout
+  title="Mission — Tech To Empower"
+  description="Tech To Empower brings FIRST robotics and hands-on STEM to underserved communities worldwide. Our mission, in plain terms."
+>
+  <section class="mission-hero">
+    <div class="container mission-hero__inner" data-reveal-group>
+      <span class="eyebrow reveal">Our Mission</span>
+      <h1 class="mission-hero__title reveal">
+        Empowering the next generation of engineers — wherever they happen to be born.
+      </h1>
+    </div>
+  </section>
+
+  <section class="container mission-statement section" data-reveal-group>
+    <p class="mission-statement__text reveal">
+      Tech To Empower is a 501(c)(3) nonprofit, established in 2023, that brings FIRST
+      robotics and hands-on STEM programs to underserved communities worldwide. We started
+      because we saw the same pattern everywhere we looked: the talent was already there —
+      the access wasn&rsquo;t.
+    </p>
+    <p class="mission-statement__text reveal">
+      So we do the unglamorous, specific work that closes that gap. We ship 3D printers to
+      Jamaica and Tamil Nadu. We start and fully fund FTC teams that couldn&rsquo;t
+      otherwise register. We mentor neurodiverse students weekly through an entire season.
+      We take a robot to a Diwali festival and hand the controller to a kid who has never
+      heard the word &ldquo;FIRST.&rdquo;
+    </p>
+  </section>
+
+  <section class="mission-pillars">
+    <div class="container">
+      <div class="mission-pillars__grid" data-reveal-group>
+        {
+          pillars.map((pillar) => (
+            <article class="pillar reveal">
+              <span class="pillar__num">{pillar.num}</span>
+              <h2 class="pillar__title">{pillar.title}</h2>
+              <p class="pillar__body">{pillar.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container mission-reach section" data-reveal-group>
+    <span class="eyebrow eyebrow--muted reveal">Where We Work</span>
+    <h2 class="mission-reach__title reveal">Seven regions across three continents.</h2>
+    <p class="mission-reach__text reveal">
+      From Texas to Tamil Nadu, Jamaica to the UAE, Libya to Uganda to South Africa — our
+      programs follow need, not convenience. Explore each initiative to see exactly what was
+      built, funded, and shipped.
+    </p>
+    <a class="btn btn--ghost reveal" href="/#work">
+      <span class="btn__icon" aria-hidden="true">&rarr;</span>
+      See our work
+    </a>
+  </section>
+
+  <section class="mission-cta">
+    <div class="container mission-cta__inner" data-reveal-group>
+      <h2 class="mission-cta__title reveal">Every dollar becomes a part, a printer, a team.</h2>
+      <a class="btn btn--sky reveal" href="/donate">
+        <span class="btn__icon" aria-hidden="true">&rarr;</span>
+        Donate now
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .mission-hero {
+    background: var(--navy);
+    color: var(--white);
+    padding-top: calc(76px + var(--space-section));
+    padding-bottom: var(--space-section);
+  }
+  .mission-hero__inner {
+    max-width: 900px;
+  }
+  .mission-hero__title {
+    margin-top: 1.4rem;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--white);
+  }
+
+  .mission-statement {
+    display: grid;
+    gap: 1.6rem;
+    max-width: 760px;
+  }
+  .mission-statement__text {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--navy);
+  }
+
+  .mission-pillars {
+    background: var(--surface);
+    padding-block: var(--space-section);
+  }
+  .mission-pillars__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 0.8rem + 2vw, 2.5rem);
+  }
+  .pillar {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem);
+    border: 1px solid var(--border);
+  }
+  .pillar__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--sky);
+  }
+  .pillar__title {
+    margin-top: 1rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .pillar__body {
+    margin-top: 0.9rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .mission-reach {
+    max-width: 720px;
+  }
+  .mission-reach__title {
+    font-size: var(--text-2xl);
+    margin-top: 1.2rem;
+    max-width: 16ch;
+  }
+  .mission-reach__text {
+    margin-top: 1.4rem;
+    font-size: var(--text-lg);
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .mission-reach .btn {
+    margin-top: 2rem;
+  }
+
+  .mission-cta {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .mission-cta__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mission-cta__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--white);
+    max-width: 18ch;
+  }
+
+  @media (max-width: 760px) {
+    .mission-pillars__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

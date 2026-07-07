@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const updated = 'June 2025';
+---
+
+<Layout
+  title="Terms of Use — Tech To Empower"
+  description="The terms governing your use of the Tech To Empower website."
+>
+  <section class="legal section">
+    <div class="container legal__inner">
+      <header class="legal__head" data-reveal-group>
+        <span class="eyebrow eyebrow--muted reveal">Legal</span>
+        <h1 class="legal__title reveal">Terms of Use</h1>
+        <p class="legal__updated reveal">Last updated: {updated}</p>
+      </header>
+
+      <div class="legal__body">
+        <p>
+          Welcome to the Tech To Empower (&ldquo;TTE&rdquo;) website. By using this site, you
+          agree to these terms. TTE is a 501(c)(3) nonprofit organization, and this site
+          exists to share our work and accept support for it.
+        </p>
+
+        <h2>Use of the site</h2>
+        <p>
+          You may view, share, and link to our content for personal and informational
+          purposes. Please don&rsquo;t use the site in any way that is unlawful, disrupts its
+          operation, or misrepresents your affiliation with TTE.
+        </p>
+
+        <h2>Donations</h2>
+        <ul>
+          <li>
+            Donations are processed securely through Square. By donating, you agree to
+            Square&rsquo;s terms in addition to ours.
+          </li>
+          <li>
+            TTE is a registered 501(c)(3) nonprofit; donations are tax-deductible to the
+            extent allowed by law. You will receive a receipt for your records.
+          </li>
+          <li>
+            Donations are voluntary gifts. If you believe a donation was made in error,
+            contact us and we will work with you in good faith.
+          </li>
+        </ul>
+
+        <h2>Intellectual property</h2>
+        <p>
+          The Tech To Empower name, logo, and original content on this site belong to TTE.
+          Photographs of students and programs are shared with permission and remain the
+          property of their respective owners. Please don&rsquo;t reuse them without asking.
+        </p>
+
+        <h2>Third-party links</h2>
+        <p>
+          Our site may link to external services such as Square or Instagram. We are not
+          responsible for the content or practices of sites we don&rsquo;t operate.
+        </p>
+
+        <h2>Disclaimer</h2>
+        <p>
+          This site is provided &ldquo;as is.&rdquo; While we work to keep information
+          accurate and current, we make no warranties about its completeness. Program
+          statistics describe past activity and are not guarantees of future outcomes.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          We may update these terms from time to time. Continued use of the site after
+          changes are posted means you accept the revised terms.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions about these terms? Reach us on Instagram at
+          <a href="https://instagram.com/tech_to_empower" target="_blank" rel="noopener noreferrer">
+            @tech_to_empower</a
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal__inner {
+    max-width: 760px;
+  }
+  .legal {
+    padding-top: calc(76px + var(--space-section));
+  }
+  .legal__head {
+    margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  .legal__title {
+    font-size: var(--text-2xl);
+    margin-top: 1rem;
+  }
+  .legal__updated {
+    margin-top: 0.8rem;
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .legal__body {
+    display: grid;
+    gap: 1.2rem;
+    color: var(--navy);
+    line-height: 1.7;
+  }
+  .legal__body h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 1.6rem;
+  }
+  .legal__body ul {
+    display: grid;
+    gap: 0.7rem;
+    padding-left: 1.2rem;
+  }
+  .legal__body a {
+    color: var(--navy-mid);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal__body a:hover {
+    color: var(--sky);
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const updated = 'June 2025';
+---
+
+<Layout
+  title="Privacy Policy — Tech To Empower"
+  description="How Tech To Empower collects, uses, and protects your information."
+>
+  <section class="legal section">
+    <div class="container legal__inner">
+      <header class="legal__head" data-reveal-group>
+        <span class="eyebrow eyebrow--muted reveal">Legal</span>
+        <h1 class="legal__title reveal">Privacy Policy</h1>
+        <p class="legal__updated reveal">Last updated: {updated}</p>
+      </header>
+
+      <div class="legal__body">
+        <p>
+          Tech To Empower (&ldquo;TTE,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) is a
+          501(c)(3) nonprofit organization. This policy explains what information we collect
+          when you visit our website or support our work, and how we handle it. We keep this
+          intentionally simple because we collect very little.
+        </p>
+
+        <h2>Information we collect</h2>
+        <ul>
+          <li>
+            <strong>Donation information.</strong> When you donate, payment is processed by
+            Square. We receive confirmation of your gift and the contact details you provide,
+            but we never see or store your full card number.
+          </li>
+          <li>
+            <strong>Contact information.</strong> If you email us or sign up to volunteer, we
+            keep the details you share so we can respond and coordinate.
+          </li>
+          <li>
+            <strong>Basic analytics.</strong> Like most websites, we may collect anonymized,
+            aggregate data about page visits to understand what&rsquo;s useful. This is not
+            tied to your identity.
+          </li>
+        </ul>
+
+        <h2>How we use information</h2>
+        <ul>
+          <li>To process donations and send receipts for tax purposes.</li>
+          <li>To respond to your messages and coordinate volunteer or partner activities.</li>
+          <li>To share occasional updates about our programs — only if you opt in.</li>
+        </ul>
+
+        <h2>What we never do</h2>
+        <p>
+          We do not sell, rent, or trade your personal information. We do not share it with
+          third parties except the service providers (such as Square) needed to process a
+          donation or operate the site, and only to the extent required to do so.
+        </p>
+
+        <h2>Children&rsquo;s privacy</h2>
+        <p>
+          Our programs serve students, but our website is directed at supporters and
+          partners. We do not knowingly collect personal information from children through
+          this site. If you believe a child has provided us information, contact us and we
+          will remove it.
+        </p>
+
+        <h2>Your choices</h2>
+        <p>
+          You can ask us to access, correct, or delete the personal information we hold about
+          you at any time. You can also unsubscribe from updates using the link in any email
+          we send.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions about this policy? Reach us on Instagram at
+          <a href="https://instagram.com/tech_to_empower" target="_blank" rel="noopener noreferrer">
+            @tech_to_empower</a
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal__inner {
+    max-width: 760px;
+  }
+  .legal {
+    padding-top: calc(76px + var(--space-section));
+  }
+  .legal__head {
+    margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  .legal__title {
+    font-size: var(--text-2xl);
+    margin-top: 1rem;
+  }
+  .legal__updated {
+    margin-top: 0.8rem;
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .legal__body {
+    display: grid;
+    gap: 1.2rem;
+    color: var(--navy);
+    line-height: 1.7;
+  }
+  .legal__body h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 1.6rem;
+  }
+  .legal__body ul {
+    display: grid;
+    gap: 0.7rem;
+    padding-left: 1.2rem;
+  }
+  .legal__body a {
+    color: var(--navy-mid);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal__body a:hover {
+    color: var(--sky);
+  }
+</style>

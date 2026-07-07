@@ -1,0 +1,236 @@
+---
+// Full-bleed photo slideshow hero (Ocean Cleanup style). Six photos crossfade
+// with a subtle Ken Burns push; a dark scrim + cool teal bottom glow sit under
+// the bottom-left headline, slide dots, and ghost CTA.
+const slides = [1, 2, 3, 4, 5, 6];
+const headline = ['Empowering the next', 'generation of', 'engineers'];
+---
+
+<section class="photo-hero" aria-label="Tech To Empower">
+  <!-- Layer 0: crossfading photos with Ken Burns -->
+  <div class="photo-hero__slides" aria-hidden="true">
+    {slides.map((n, i) => (
+      <div class={`ph-slide${i === 0 ? ' is-active' : ''}`} data-slide={i}>
+        <div
+          class="ph-slide__img"
+          style={`background-image:url('/assets/images/hero-${n}.jpg')`}
+        ></div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Layer 1: dark scrim · Layer 2: teal bottom glow -->
+  <div class="photo-hero__scrim" aria-hidden="true"></div>
+  <div class="photo-hero__glow" aria-hidden="true"></div>
+
+  <!-- Layer 3: text, dots, button -->
+  <div class="photo-hero__content">
+    <h1 class="photo-hero__title">
+      {headline.map((line, i) => (
+        <span class="photo-hero__line" style={`--line-delay:${i * 120}ms`}>{line}</span>
+      ))}
+    </h1>
+
+    <a class="photo-hero__cta" href="/donate">
+      <span class="photo-hero__cta-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </span>
+      <span>Help children</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .photo-hero {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--navy);
+    isolation: isolate;
+  }
+
+  /* ---- Layer 0: photos ---- */
+  .photo-hero__slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .ph-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s var(--ease-out-expo);
+    will-change: opacity;
+  }
+
+  .ph-slide.is-active {
+    opacity: 1;
+  }
+
+  .ph-slide__img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+
+  /* ---- Layer 1: dark scrim ---- */
+  .photo-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.1) 60%,
+      transparent 100%
+    );
+  }
+
+  /* ---- Layer 2: cool teal glow bleeding up from the bottom edge ---- */
+  .photo-hero__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgba(56, 189, 248, 0.18) 0%,
+      rgba(56, 189, 248, 0.06) 18%,
+      transparent 35%
+    );
+  }
+
+  /* ---- Layer 3: content ---- */
+  .photo-hero__content {
+    position: absolute;
+    z-index: 3;
+    left: var(--gutter);
+    bottom: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+    right: var(--gutter);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .photo-hero__title {
+    font-family: 'Montserrat', var(--font-body);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(38px, 5.4vw, 72px);
+    line-height: 0.94;
+    color: var(--white);
+    margin: 0;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .photo-hero__line {
+    display: block;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: heroLineUp 0.7s var(--ease-out-expo) forwards;
+    animation-delay: var(--line-delay, 0ms);
+  }
+
+  @keyframes heroLineUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- ghost pill CTA ---- */
+  .photo-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 1.6rem 0.85rem 0.85rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: 0.01em;
+    background: transparent;
+    transition: border-color var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .photo-hero__cta:hover {
+    border-color: rgba(255, 255, 255, 1);
+  }
+
+  .photo-hero__cta-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1em;
+    height: 2.1em;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+      border-color var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .photo-hero__cta:hover .photo-hero__cta-icon {
+    transform: translateX(4px);
+    border-color: rgba(255, 255, 255, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-hero__line { opacity: 1; transform: none; animation: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const hero = document.querySelector('.photo-hero');
+    if (!hero) return;
+
+    const slides = Array.from(hero.querySelectorAll('.ph-slide'));
+    if (slides.length < 2) return;
+
+    const INTERVAL = 4500;
+    let current = 0;
+    let timer = null;
+
+    function show(next) {
+      if (next === current) return;
+      slides[current].classList.remove('is-active');
+      current = (next + slides.length) % slides.length;
+      slides[current].classList.add('is-active');
+    }
+
+    function advance() {
+      show(current + 1);
+    }
+
+    function start() {
+      stop();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      timer = window.setInterval(advance, INTERVAL);
+    }
+
+    function stop() {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    // Pause while the tab is hidden to save the crossfade churn.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    start();
+  })();
+</script>

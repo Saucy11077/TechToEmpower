@@ -1,0 +1,304 @@
+/* ==========================================================================
+   Tech To Empower — global styles & design tokens
+   ========================================================================== */
+
+:root {
+  /* ---- Brand palette (no orange anywhere) ---- */
+  --navy: #0a1628;
+  --navy-mid: #1a3a6b;
+  --sky: #38bdf8;
+  --white: #ffffff;
+  --surface: #f0f7ff;
+  --muted: #64748b;
+  --border: #e2e8f0;
+
+  /* Derived tints */
+  --navy-90: rgba(10, 22, 40, 0.9);
+  --navy-72: rgba(10, 22, 40, 0.72);
+  --sky-soft: rgba(56, 189, 248, 0.14);
+  --ink-soft: rgba(15, 23, 42, 0.06);
+
+  /* ---- Typography ---- */
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-condensed: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+
+  --text-xs: 0.78rem;
+  --text-sm: 0.9rem;
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+  --text-xl: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  --text-2xl: clamp(2.2rem, 1.5rem + 3vw, 4rem);
+  --text-hero: clamp(2.6rem, 1.2rem + 6.4vw, 7rem);
+
+  /* ---- Spacing ---- */
+  --space-section: clamp(4.5rem, 3rem + 6vw, 9rem);
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 4rem);
+  --max-width: 1280px;
+
+  /* ---- Motion ---- */
+  --duration-fast: 160ms;
+  --duration-normal: 320ms;
+  --duration-slow: 600ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---- Radii & shadow ---- */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --shadow-card: 0 22px 50px -28px rgba(10, 22, 40, 0.45);
+  --shadow-float: 0 30px 80px -40px rgba(10, 22, 40, 0.6);
+}
+
+/* ---- Reset ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--navy);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* `clip` prevents horizontal overflow WITHOUT making <body> a scroll
+     container — keeps the document scroller on <html> so window.scrollY,
+     the scroll-progress bar, and the navbar scroll logic all work. */
+  overflow-x: clip;
+}
+
+img,
+picture,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--sky);
+  color: var(--navy);
+}
+
+/* ---- Shared layout helpers ---- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sky);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.eyebrow--muted {
+  color: var(--muted);
+}
+
+/* ---- Buttons ---- */
+.btn {
+  --btn-bg: var(--navy);
+  --btn-fg: var(--white);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+    box-shadow var(--duration-normal) var(--ease-out-expo),
+    background var(--duration-normal) var(--ease-out-expo);
+  will-change: transform;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+.btn .btn__icon {
+  display: inline-flex;
+  width: 1.4em;
+  height: 1.4em;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  transition: transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.btn:hover .btn__icon {
+  transform: translateX(3px);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--navy);
+  border-color: var(--border);
+}
+
+.btn--ghost .btn__icon {
+  background: var(--ink-soft);
+}
+
+.btn--sky {
+  --btn-bg: var(--sky);
+  --btn-fg: var(--navy);
+}
+
+/* ---- Scroll reveal (IntersectionObserver toggles .is-visible) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Custom cursor (fine-pointer devices only) ---- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity var(--duration-normal) ease;
+}
+
+.cursor-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--white);
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--white);
+  transform: translate(-50%, -50%);
+  transition: width var(--duration-normal) var(--ease-out-expo),
+    height var(--duration-normal) var(--ease-out-expo),
+    background var(--duration-normal) var(--ease-out-expo),
+    opacity var(--duration-normal) ease;
+}
+
+.cursor--active .cursor-ring {
+  width: 48px;
+  height: 48px;
+  background: var(--sky);
+  border-color: transparent;
+}
+
+.cursor--active .cursor-dot {
+  opacity: 0;
+}
+
+body.cursor-ready .cursor-dot,
+body.cursor-ready .cursor-ring {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---- Scroll progress bar ---- */
+/* ---- Accessibility: reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---- Focus visibility ---- */
+:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
