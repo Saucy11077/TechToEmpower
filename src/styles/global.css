@@ -218,61 +218,6 @@ h4 {
   transform: translateY(0);
 }
 
-/* ---- Custom cursor (fine-pointer devices only) ---- */
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  opacity: 0;
-  transition: opacity var(--duration-normal) ease;
-}
-
-.cursor-dot {
-  width: 12px;
-  height: 12px;
-  background: var(--white);
-  transform: translate(-50%, -50%);
-}
-
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--white);
-  transform: translate(-50%, -50%);
-  transition: width var(--duration-normal) var(--ease-out-expo),
-    height var(--duration-normal) var(--ease-out-expo),
-    background var(--duration-normal) var(--ease-out-expo),
-    opacity var(--duration-normal) ease;
-}
-
-.cursor--active .cursor-ring {
-  width: 48px;
-  height: 48px;
-  background: var(--sky);
-  border-color: transparent;
-}
-
-.cursor--active .cursor-dot {
-  opacity: 0;
-}
-
-body.cursor-ready .cursor-dot,
-body.cursor-ready .cursor-ring {
-  opacity: 1;
-}
-
-@media (pointer: coarse) {
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
-  }
-}
-
 /* ---- Scroll progress bar ---- */
 /* ---- Accessibility: reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
@@ -288,11 +233,6 @@ body.cursor-ready .cursor-ring {
   .reveal {
     opacity: 1;
     transform: none;
-  }
-
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
   }
 }
 
