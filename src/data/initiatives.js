@@ -136,9 +136,6 @@ export const initiatives = {
       { value: 'PDP', label: 'Jamaican partnership' },
     ],
     gallery: [
-      '/assets/images/jamaica-1.jpg',
-      '/assets/images/jamaica-2.jpg',
-      '/assets/images/jamaica-3.jpg',
       '/assets/images/jamaica-4.jpg',
       '/assets/images/jamaica-5.jpg',
       '/assets/images/jamaica-6.jpg',
