@@ -122,7 +122,7 @@ export const initiatives = {
     opening:
       'Four printers. Fifty teams. The math is simple — what those teams can build now is anything but.',
     problem:
-      'FTC teams in Jamaica compete without the hardware that wealthier programs take for granted. No 3D printing means no custom parts, no rapid prototyping, no fair fight.',
+      'Most FTC teams in Jamaica have little to no funding, and the few teams that do have investment behind them are far and few between. Without access to a 3D printer, the rest are left without custom parts or rapid prototyping. By placing printers in college makerspaces, every team can now use them, not just the ones who could afford their own.',
     did: [
       'Coordinated with Jamaica’s FIRST Program Development Partner.',
       'Financed and shipped 4 3D printers and 16 filaments to designated makerspaces.',
@@ -139,6 +139,12 @@ export const initiatives = {
       '/assets/images/jamaica-1.jpg',
       '/assets/images/jamaica-2.jpg',
       '/assets/images/jamaica-3.jpg',
+      '/assets/images/jamaica-4.jpg',
+      '/assets/images/jamaica-5.jpg',
+      '/assets/images/jamaica-6.jpg',
+      '/assets/images/jamaica-7.jpg',
+      '/assets/images/jamaica-8.jpg',
+      '/assets/images/jamaica-9.jpg',
     ],
     quote: {
       text: 'Fifty teams. Four printers. Every one of them can now build what they imagine.',
