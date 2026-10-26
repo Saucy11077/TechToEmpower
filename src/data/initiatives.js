@@ -12,8 +12,8 @@ export const initiatives = {
       'Most students in rural Indian schools have no access to hands-on STEM. FIRST was virtually unknown in these communities.',
     did: [
       'Partnered with Village Technology Schools (VTS).',
-      'Introduced FIRST to 5,000+ students across 5 rural schools in Tamil Nadu.',
-      'Sent 13 3D printers, creating 5 makerspaces.',
+      'Introduced FIRST to 5,000+ students across 2 rural schools in Tamil Nadu.',
+      'Sent 13 3D printers, creating 2 makerspaces.',
       'Started 2 FTC teams: 25228 and 25229.',
       'Fully funded 2 teams — registration, parts, and travel.',
       'Hosted multiple online bootcamps for robot building.',
