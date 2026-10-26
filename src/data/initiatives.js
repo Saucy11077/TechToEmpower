@@ -14,14 +14,14 @@ export const initiatives = {
       'Partnered with Village Technology Schools (VTS).',
       'Introduced FIRST to 5,000+ students across 5 rural schools in Tamil Nadu.',
       'Sent 13 3D printers, creating 5 makerspaces.',
-      'Started 5 FTC teams: 25228, 25229, 25230, 25231, 25232.',
+      'Started 2 FTC teams: 25228 and 25229.',
       'Fully funded 2 teams — registration, parts, and travel.',
       'Hosted multiple online bootcamps for robot building.',
     ],
     stats: [
       { value: '5,000+', label: 'students reached' },
       { value: '13', label: '3D printers' },
-      { value: '5', label: 'FTC teams' },
+      { value: '2', label: 'FTC teams' },
       { value: '2', label: 'fully funded' },
     ],
     campus: {
@@ -69,7 +69,7 @@ export const initiatives = {
       ],
     },
     fieldwork: {
-      eyebrow: 'From the Field',
+      eyebrow: 'Velammal Campus',
       title: 'From outreach to the national stage',
       intro:
         'It started with getting kids interested, and grew into two FTC teams competing at the national level.',
@@ -90,7 +90,7 @@ export const initiatives = {
         {
           title: 'Two teams, one national championship',
           blurb:
-            'We then sent 2 FTC kits and started two teams. Both made it to the India National Championships in Goa, and we sponsored their trip. They also won the Rookie Team of the Year award.',
+            'We then sent 2 FTC kits and started two teams. Both made it to the India National Championships in Goa, and we sponsored their trip. One of them also won the Rookie Team of the Year award.',
           images: [
             { src: '/assets/images/india-3.webp', alt: 'Students and a mentor unboxing and sorting an FTC kit' },
             { src: '/assets/images/india-2.webp', alt: 'Team 25228 holding Thank You signs at the championship' },
