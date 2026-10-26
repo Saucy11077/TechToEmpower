@@ -13,17 +13,66 @@ export const initiatives = {
     did: [
       'Partnered with Village Technology Schools (VTS).',
       'Introduced FIRST to 5,000+ students across 5 rural schools in Tamil Nadu.',
-      'Sent 9 3D printers, creating 5 makerspaces.',
+      'Sent 13 3D printers, creating 5 makerspaces.',
       'Started 5 FTC teams: 25228, 25229, 25230, 25231, 25232.',
       'Fully funded 2 teams — registration, parts, and travel.',
       'Hosted multiple online bootcamps for robot building.',
     ],
     stats: [
       { value: '5,000+', label: 'students reached' },
-      { value: '9', label: '3D printers' },
+      { value: '13', label: '3D printers' },
       { value: '5', label: 'FTC teams' },
       { value: '2', label: 'fully funded' },
     ],
+    campus: {
+      eyebrow: 'The Villupuram Campus',
+      title: 'A community center, built with Nethralaya Foundation',
+      intro:
+        'Villupuram is a village community center we built in partnership with Nethralaya Foundation. Every photo below was taken on this one campus.',
+      sections: [
+        {
+          title: 'Classroom workshops',
+          blurb:
+            'Lessons on circuits, microcontrollers like the NodeMCU (ESP8266), and the basics of analog and digital signals.',
+          images: [
+          { src: '/assets/images/villupuram/classroom-wide.jpg', alt: 'An instructor teaching circuits at the blackboard to a full classroom' },
+          { src: '/assets/images/villupuram/node-mcu-lesson.jpg', alt: 'An instructor holding a small robot car in front of a blackboard covered in circuit diagrams' },
+          { src: '/assets/images/villupuram/robot-car-demo.jpg', alt: 'An instructor demonstrating a robot car to students' },
+          { src: '/assets/images/villupuram/classroom-talk.jpg', alt: 'Two instructors addressing a classroom of students' },
+          { src: '/assets/images/villupuram/analog-digital.jpg', alt: 'Students at the front of a classroom beside a screen listing analog, digital, power and ground' },
+          { src: '/assets/images/villupuram/group-and-classes.jpg', alt: 'The Villupuram team and students gathered for a group photo, with classroom scenes below' },
+          ],
+        },
+        {
+          title: 'Hands-on builds',
+          blurb:
+            'Students wiring breadboard circuits, working with an Arduino, and getting up close with a hand-built model plane.',
+          images: [
+          { src: '/assets/images/villupuram/circuits.jpg', alt: 'Students gathered around a table wiring a breadboard circuit' },
+          { src: '/assets/images/villupuram/plane-arduino.jpg', alt: 'Three students with a hand-built model plane and an Arduino board' },
+          { src: '/assets/images/villupuram/plane-demo.jpg', alt: 'Students watching a model plane demonstration outdoors' },
+          { src: '/assets/images/villupuram/build-project.jpg', alt: 'Students and an instructor working on a build project around a table' },
+          ],
+        },
+        {
+          title: '3D printing',
+          blurb:
+            'The printers we sent are in use: students learn how a 3D printer works, load filament, and watch parts come to life.',
+          images: [
+          { src: '/assets/images/villupuram/printing-lesson.jpg', alt: 'A student presenting the steps of 3D printing beside a printer and whiteboard' },
+          { src: '/assets/images/villupuram/printer-group.jpg', alt: 'Students and instructors gathered around a 3D printer' },
+          { src: '/assets/images/villupuram/printer-students.jpg', alt: 'Students looking on as an instructor explains the 3D printer' },
+          { src: '/assets/images/villupuram/printer-circle.jpg', alt: 'Students seated in a circle around a 3D printer' },
+          { src: '/assets/images/villupuram/printer-figurine.jpg', alt: 'A 3D printer mid-print in front of seated students' },
+          ],
+          video: {
+            src: '/assets/videos/villupuram-printing.mp4',
+            poster: '/assets/videos/villupuram-printing-poster.jpg',
+            caption: 'A student presents during a 3D printing session.',
+          },
+        },
+      ],
+    },
     gallery: [
       '/assets/images/india-1.webp',
       '/assets/images/india-2.webp',

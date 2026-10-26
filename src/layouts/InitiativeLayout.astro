@@ -5,6 +5,22 @@ interface Stat {
   value: string;
   label: string;
 }
+interface CampusImage {
+  src: string;
+  alt: string;
+}
+interface CampusSection {
+  title: string;
+  blurb: string;
+  images: CampusImage[];
+  video?: { src: string; poster?: string; caption?: string };
+}
+interface Campus {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  sections: CampusSection[];
+}
 interface InitiativeData {
   pageTitle: string;
   region: string;
@@ -13,6 +29,7 @@ interface InitiativeData {
   problem: string;
   did: string[];
   stats: Stat[];
+  campus?: Campus;
   gallery: string[];
   galleryNote?: string;
   next: string;
@@ -83,6 +100,40 @@ const { data } = Astro.props;
         }
       </div>
     </section>
+
+    <!-- 5b. Campus subsections (optional) -->
+    {
+      data.campus && (
+        <section class="container init-campus section">
+          <div data-reveal-group>
+            <span class="eyebrow eyebrow--muted reveal">{data.campus.eyebrow}</span>
+            <h2 class="init-campus__title reveal">{data.campus.title}</h2>
+            <p class="init-campus__intro reveal">{data.campus.intro}</p>
+          </div>
+          {data.campus.sections.map((sec) => (
+            <div class="init-campus__sub" data-reveal-group>
+              <h3 class="init-campus__subtitle reveal">{sec.title}</h3>
+              <p class="init-campus__blurb reveal">{sec.blurb}</p>
+              <div class="init-gallery__masonry">
+                {sec.images.map((im) => (
+                  <button class="gallery-item reveal" data-tilt type="button">
+                    <img src={im.src} alt={im.alt} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+              {sec.video && (
+                <figure class="init-campus__video reveal">
+                  <video controls preload="metadata" playsinline poster={sec.video.poster}>
+                    <source src={sec.video.src} type="video/mp4" />
+                  </video>
+                  {sec.video.caption && <figcaption>{sec.video.caption}</figcaption>}
+                </figure>
+              )}
+            </div>
+          ))}
+        </section>
+      )
+    }
 
     <!-- 6. Photo gallery (masonry + 3D tilt + lightbox) -->
     {
@@ -298,6 +349,53 @@ const { data } = Astro.props;
     font-size: var(--text-lg);
     color: var(--muted);
     font-style: italic;
+  }
+
+  /* 5b. Campus subsections */
+  .init-campus__title {
+    margin-top: 1.2rem;
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 1.2rem + 2.4vw, 3rem);
+    line-height: 1.1;
+    color: var(--navy);
+  }
+  .init-campus__intro {
+    margin-top: 1rem;
+    max-width: 58ch;
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .init-campus__sub {
+    margin-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  }
+  .init-campus__subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+    color: var(--navy);
+  }
+  .init-campus__blurb {
+    margin-top: 0.5rem;
+    max-width: 58ch;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .init-campus__video {
+    margin: 0.4rem 0 0;
+    max-width: 52rem;
+  }
+  .init-campus__video video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    background: var(--navy);
+  }
+  .init-campus__video figcaption {
+    margin-top: 0.6rem;
+    font-size: var(--text-sm);
+    color: var(--muted);
   }
 
   /* 8. Next */
