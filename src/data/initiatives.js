@@ -28,7 +28,7 @@ export const initiatives = {
       eyebrow: 'The Villupuram Campus',
       title: 'A community center, built with Nethralaya Foundation',
       intro:
-        'Villupuram is a village community center we built in partnership with Nethralaya Foundation. Every photo below was taken on this one campus.',
+        'Villupuram is a village community center we built in partnership with Nethralaya Foundation.',
       sections: [
         {
           title: 'Classroom workshops',
@@ -65,23 +65,41 @@ export const initiatives = {
           { src: '/assets/images/villupuram/printer-circle.jpg', alt: 'Students seated in a circle around a 3D printer' },
           { src: '/assets/images/villupuram/printer-figurine.jpg', alt: 'A 3D printer mid-print in front of seated students' },
           ],
-          video: {
-            src: '/assets/videos/villupuram-printing.mp4',
-            poster: '/assets/videos/villupuram-printing-poster.jpg',
-            caption: 'A student presents during a 3D printing session.',
-          },
         },
       ],
     },
-    gallery: [
-      '/assets/images/india-1.webp',
-      '/assets/images/india-2.webp',
-      '/assets/images/india-3.webp',
-      '/assets/images/india-4.webp',
-      '/assets/images/india-5.webp',
-      '/assets/images/india-6.webp',
-      '/assets/images/india-7.webp',
-    ],
+    fieldwork: {
+      eyebrow: 'From the Field',
+      title: 'From outreach to the national stage',
+      intro:
+        'It started with getting kids interested, and grew into two FTC teams competing at the national level.',
+      sections: [
+        {
+          title: 'FTC outreach events',
+          blurb:
+            'We began with FTC outreach events in schools and auditoriums, introducing students to robotics for the first time and getting them excited to build.',
+          images: [
+            { src: '/assets/images/india-8.webp', alt: 'A large auditorium of students in matching pink shirts and adults watching an outreach event' },
+            { src: '/assets/images/india-9.webp', alt: 'A presenter with a microphone and a drone addressing a crowd of seated schoolchildren outdoors' },
+            { src: '/assets/images/india-5.webp', alt: 'Students and teachers gathered in a hall with small robots on the floor' },
+            { src: '/assets/images/india-7.webp', alt: 'Students in pink Tech To Empower, Village, and FIRST shirts seated at an event' },
+            { src: '/assets/images/india-6.webp', alt: 'Students sitting on the floor watching a remote session on a screen' },
+            { src: '/assets/images/india-4.webp', alt: 'A classroom of students watching an online session beside a 3D printer' },
+          ],
+        },
+        {
+          title: 'Two teams, one national championship',
+          blurb:
+            'We then sent 2 FTC kits and started two teams. Both made it to the India National Championships in Goa, and we sponsored their trip. They also won the Rookie Team of the Year award.',
+          images: [
+            { src: '/assets/images/india-3.webp', alt: 'Students and a mentor unboxing and sorting an FTC kit' },
+            { src: '/assets/images/india-2.webp', alt: 'Team 25228 holding Thank You signs at the championship' },
+            { src: '/assets/images/india-1.webp', alt: 'Students working at a 3D printer with a small robot beside them' },
+          ],
+        },
+      ],
+    },
+    gallery: [],
     next: 'Expanding our partnership with VTS to reach more districts and sustain the teams we have already started.',
   },
 

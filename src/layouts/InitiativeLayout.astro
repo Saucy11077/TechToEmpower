@@ -13,7 +13,6 @@ interface CampusSection {
   title: string;
   blurb: string;
   images: CampusImage[];
-  video?: { src: string; poster?: string; caption?: string };
 }
 interface Campus {
   eyebrow: string;
@@ -30,6 +29,7 @@ interface InitiativeData {
   did: string[];
   stats: Stat[];
   campus?: Campus;
+  fieldwork?: Campus;
   gallery: string[];
   galleryNote?: string;
   next: string;
@@ -39,6 +39,7 @@ interface Props {
   data: InitiativeData;
 }
 const { data } = Astro.props;
+const photoBlocks = [data.campus, data.fieldwork].filter((b): b is Campus => Boolean(b));
 ---
 
 <Layout
@@ -101,16 +102,16 @@ const { data } = Astro.props;
       </div>
     </section>
 
-    <!-- 5b. Campus subsections (optional) -->
+    <!-- 5b. Captioned photo subsections (optional) -->
     {
-      data.campus && (
+      photoBlocks.map((block) => (
         <section class="container init-campus section">
           <div data-reveal-group>
-            <span class="eyebrow eyebrow--muted reveal">{data.campus.eyebrow}</span>
-            <h2 class="init-campus__title reveal">{data.campus.title}</h2>
-            <p class="init-campus__intro reveal">{data.campus.intro}</p>
+            <span class="eyebrow eyebrow--muted reveal">{block.eyebrow}</span>
+            <h2 class="init-campus__title reveal">{block.title}</h2>
+            <p class="init-campus__intro reveal">{block.intro}</p>
           </div>
-          {data.campus.sections.map((sec) => (
+          {block.sections.map((sec) => (
             <div class="init-campus__sub" data-reveal-group>
               <h3 class="init-campus__subtitle reveal">{sec.title}</h3>
               <p class="init-campus__blurb reveal">{sec.blurb}</p>
@@ -121,18 +122,10 @@ const { data } = Astro.props;
                   </button>
                 ))}
               </div>
-              {sec.video && (
-                <figure class="init-campus__video reveal">
-                  <video controls preload="metadata" playsinline poster={sec.video.poster}>
-                    <source src={sec.video.src} type="video/mp4" />
-                  </video>
-                  {sec.video.caption && <figcaption>{sec.video.caption}</figcaption>}
-                </figure>
-              )}
             </div>
           ))}
         </section>
-      )
+      ))
     }
 
     <!-- 6. Photo gallery (masonry + 3D tilt + lightbox) -->
@@ -148,7 +141,7 @@ const { data } = Astro.props;
             ))}
           </div>
         </section>
-      ) : (
+      ) : photoBlocks.length > 0 ? null : (
         <section class="container init-gallery section" data-reveal-group>
           <span class="eyebrow eyebrow--muted reveal">From the Field</span>
           <p class="init-gallery__note reveal">{data.galleryNote ?? 'Photos coming soon.'}</p>
@@ -381,23 +374,6 @@ const { data } = Astro.props;
     color: var(--muted);
     line-height: 1.5;
   }
-  .init-campus__video {
-    margin: 0.4rem 0 0;
-    max-width: 52rem;
-  }
-  .init-campus__video video {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-md);
-    background: var(--navy);
-  }
-  .init-campus__video figcaption {
-    margin-top: 0.6rem;
-    font-size: var(--text-sm);
-    color: var(--muted);
-  }
-
   /* 8. Next */
   .init-next__text {
     margin-top: 1.4rem;
