@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+// Square payment link — the donor chooses the amount at checkout.
+const DONATE_URL = 'https://square.link/u/AUWq9knP';
+
 const tiers = [
   { amount: '$10', note: 'Buys parts for one student' },
   { amount: '$25', note: 'Funds a week of FIRST training' },
@@ -32,29 +35,27 @@ const tiers = [
       <div class="donate__card-wrap reveal">
         <div class="donate__beam"></div>
         <div class="donate__card">
-          <h2 class="donate__card-title">Choose an amount</h2>
+          <h2 class="donate__card-title">What your gift can do</h2>
 
-          <div class="tiers" role="radiogroup" aria-label="Donation amount">
+          <ul class="tiers">
             {
-              tiers.map((tier, i) => (
-                <button
-                  class:list={['tier-card', { 'is-selected': i === 1 }]}
-                  type="button"
-                  role="radio"
-                  aria-checked={i === 1 ? 'true' : 'false'}
-                  data-amount={tier.amount}
-                >
+              tiers.map((tier) => (
+                <li class="tier-card">
                   <span class="tier-card__amount">{tier.amount}</span>
                   <span class="tier-card__note">{tier.note}</span>
-                </button>
+                </li>
               ))
             }
-          </div>
+          </ul>
 
-          {/* TODO: replace href="#" with the live Square donation link when available. */}
-          <a class="btn donate__submit" id="donate-submit" href="#" data-base="Donate">
+          <a
+            class="btn donate__submit"
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span class="btn__icon" aria-hidden="true">→</span>
-            <span id="donate-submit-label">Donate $25 via Square</span>
+            <span>Donate via Square</span>
           </a>
 
           <p class="donate__fineprint">
@@ -166,6 +167,9 @@ const tiers = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   .tier-card {
@@ -174,22 +178,9 @@ const tiers = [
     border-radius: var(--radius-md);
     border: 1.5px solid var(--border);
     background: var(--white);
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease,
-      transform var(--duration-fast) var(--ease-out-expo);
-  }
-
-  .tier-card:hover {
-    border-color: var(--sky);
-    transform: translateY(-2px);
-  }
-
-  .tier-card.is-selected {
-    background: var(--navy);
-    border-color: var(--navy);
   }
 
   .tier-card__amount {
@@ -199,18 +190,10 @@ const tiers = [
     color: var(--navy);
   }
 
-  .tier-card.is-selected .tier-card__amount {
-    color: var(--white);
-  }
-
   .tier-card__note {
     font-size: var(--text-sm);
     color: var(--muted);
     line-height: 1.4;
-  }
-
-  .tier-card.is-selected .tier-card__note {
-    color: rgba(255, 255, 255, 0.78);
   }
 
   .donate__submit {
@@ -240,21 +223,3 @@ const tiers = [
     }
   }
 </style>
-
-<script>
-  const cards = document.querySelectorAll<HTMLElement>('.tier-card');
-  const label = document.getElementById('donate-submit-label');
-
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      cards.forEach((c) => {
-        c.classList.remove('is-selected');
-        c.setAttribute('aria-checked', 'false');
-      });
-      card.classList.add('is-selected');
-      card.setAttribute('aria-checked', 'true');
-      const amount = card.dataset.amount ?? '';
-      if (label) label.textContent = `Donate ${amount} via Square`;
-    });
-  });
-</script>
