@@ -1,11 +1,16 @@
 ---
 const officers = [
-  { name: 'Sahas Kumaraguru', role: 'President', img: '/assets/images/officer-sahas.jpg' },
-  { name: 'Aidan Yacoob', role: 'Vice President', img: '/assets/images/officer-aidan.jpg' },
+  { name: 'Sahas Kumaraguru', role: 'Founder', img: '/assets/images/officer-sahas.jpg' },
+  { name: 'Aidan Yacoob', role: 'President', img: '/assets/images/officer-aidan.jpg' },
   {
     name: 'Abhinav Alwarappan',
     role: 'Head of Technological Management',
     img: '/assets/images/officer-abhinav.jpg',
+  },
+  {
+    name: 'Mutasim Mohammed',
+    role: 'Director of finance & operations',
+    img: '/assets/images/officer-mutasim.png',
   },
 ];
 ---
@@ -51,7 +56,7 @@ const officers = [
 
   .officers__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: clamp(1.2rem, 0.5rem + 2vw, 2.2rem);
   }
 
@@ -108,6 +113,12 @@ const officers = [
     font-size: var(--text-sm);
     color: var(--muted);
     font-weight: 500;
+  }
+
+  @media (max-width: 1100px) {
+    .officers__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 760px) {
